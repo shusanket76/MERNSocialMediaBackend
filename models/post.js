@@ -4,7 +4,11 @@ const postSchema = mongoose.Schema(
   {
     title: String,
     message: String,
-    creator: String,
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     tags: [String],
     likeCount: {
       type: Number,
@@ -16,5 +20,4 @@ const postSchema = mongoose.Schema(
   }
 );
 
-const PostModel = mongoose.model("PostModel", postSchema);
-export default PostModel;
+module.exports = mongoose.model("PostModel", postSchema);

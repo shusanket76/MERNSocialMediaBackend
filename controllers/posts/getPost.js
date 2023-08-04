@@ -6,7 +6,7 @@ const getPosts = asyncHandler(async (req, res) => {
   if (!posts.length) {
     return res.json({ message: "NO POSTS FOUND" });
   }
-  return res.json({ message: posts });
+  return res.json(posts);
 });
 
 module.exports = getPosts;

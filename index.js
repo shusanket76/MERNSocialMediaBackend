@@ -4,11 +4,13 @@ const mongoose = require("mongoose");
 const app = express();
 const posts = require("./routes/posts");
 const users = require("./routes/user");
+const auth = require("./routes/authRoutes");
 
 require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
+app.use("/auth",auth);
 app.use("/posts", posts);
 app.use("/users", users);
 
@@ -19,7 +21,7 @@ const start = async () => {
       useUnifiedTopology: true,
     });
 
-    app.listen(4000, () => {
+    app.listen(3500, () => {
       console.log("SERVER RUNNING SUCCESSFULLY ON PORT 4000");
     });
   } catch (error) {

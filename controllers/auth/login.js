@@ -5,16 +5,21 @@ const jwt = require("jsonwebtoken");
 
 const loginController = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
+
   if (!username || !password) {
-    res.json({ message: "ALL FIELDS ARE REQUIRED" });
+    return res.status(401).json({ message: "ALL FIELDS ARE REQUIRED" });
   }
   const foundUser = await User.findOne({ username }).exec();
   if (!foundUser) {
-    res.json({ message: "NO USERN FOUND. PLEASE CREATE AN ACCOUNT" });
+    return res
+      .status(401)
+      .json({ message: "NO USERN FOUND. PLEASE CREATE AN ACCOUNT" });
   }
+
   const match = await bcrypt.compare(password, foundUser.password);
+  console.log(match);
   if (!match) {
-    res.json({ message: "WRONG PASSWORD" });
+    return res.status(401).json({ message: "WRONG PASSWORD" });
   }
   const accessToken = jwt.sign(
     {
@@ -37,7 +42,7 @@ const loginController = asyncHandler(async (req, res) => {
     sameSite: "None",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
-  res.json({ accessToken });
+  return res.json({ accessToken });
 });
 
 module.exports = loginController;

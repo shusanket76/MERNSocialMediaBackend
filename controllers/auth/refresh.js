@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const refresh = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) {
-    res.json({ message: "UNAUTHORIZED 1" });
+    return res.status(401).json({ message: "UNAUTHORIZED 10" });
   }
   const refreshToken = cookies.jwt;
   jwt.verify(

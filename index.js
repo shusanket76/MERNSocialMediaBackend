@@ -5,12 +5,13 @@ const app = express();
 const posts = require("./routes/posts");
 const users = require("./routes/user");
 const auth = require("./routes/authRoutes");
+const corsOptions = require("./config/corsOptions");
 
 require("dotenv").config();
 
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
-app.use("/auth",auth);
+app.use("/auth", auth);
 app.use("/posts", posts);
 app.use("/users", users);
 
@@ -22,7 +23,7 @@ const start = async () => {
     });
 
     app.listen(3500, () => {
-      console.log("SERVER RUNNING SUCCESSFULLY ON PORT 4000");
+      console.log("SERVER RUNNING SUCCESSFULLY ON PORT 3500");
     });
   } catch (error) {
     console.log(error);
